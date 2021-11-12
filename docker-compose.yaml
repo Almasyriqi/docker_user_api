@@ -3,11 +3,13 @@ version: '3.8'
 services:
   mysqldb:
     image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
     container_name: mysqldb
     env_file: ./.env
     environment:
-      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
-      MYSQL_DATABASE: $MYSQL_DATABASE
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: user_api
+      MYSQL_ROOT_HOST: '%'
     volumes:
       - /opt/data:/var/lib/mysql
       - .docker/user_api.sql:/docker-entrypoint-initdb.d/user_api.sql
