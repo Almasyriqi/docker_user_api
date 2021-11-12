@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    image: mysql:latest
+    container_name: mysqldb
+    env_file: ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+    volumes:
+      - /opt/data:/var/lib/mysql
+      - .docker/user_api.sql:/docker-entrypoint-initdb.d/user_api.sql
+    ports:
+      - 3306:3306
+    restart: always
+    networks:
+      - backend
+
+  app:
+    image: riqi/komputasi-awan-user
+    container_name: user-app
+    ports:
+      - 4000:4000
+    restart: unless-stopped
+    depends_on:
+      - mysqldb
+    stdin_open: true
+    tty: true
+    networks:
+      - backend
+
+  networks:
+    backend:
+      name: backend-network
+    
+    
+  
