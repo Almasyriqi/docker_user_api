@@ -30,9 +30,9 @@ services:
     networks:
       - backend
 
-  networks:
-    backend:
-      name: backend-network
+networks:
+  backend:
+    name: backend-network
     
     
   
