@@ -24,7 +24,7 @@ services:
     container_name: user-app
     ports:
       - 4000:4000
-    restart: unless-stopped
+    restart: alwasy
     depends_on:
       - mysqldb
     stdin_open: true
