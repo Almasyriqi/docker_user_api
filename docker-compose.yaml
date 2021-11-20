@@ -17,7 +17,8 @@ services:
       - 3306:3306
     restart: always
     networks:
-      - backend
+      - backend:
+          ipv4_address: 172.16.0.5
 
   app:
     image: riqi/komputasi-awan-user
@@ -30,11 +31,19 @@ services:
     stdin_open: true
     tty: true
     networks:
-      - backend
+      - backend:
+          ipv4_address: 172.16.0.6
 
 networks:
   backend:
     name: backend-network
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.0.0/24
+        - gateway: 172.16.238.1
+
     
     
   
