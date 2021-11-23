@@ -13,24 +13,26 @@ services:
     volumes:
       - /opt/data:/var/lib/mysql
       - .docker/user_api.sql:/docker-entrypoint-initdb.d/user_api.sql
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
     ports:
       - 3306:3306
-    restart: always
     networks:
       - backend
+    restart: always
 
   app:
     image: riqi/komputasi-awan-user
     container_name: user-app
     ports:
       - 4000:4000
-    restart: always
     depends_on:
       - mysqldb
     stdin_open: true
     tty: true
     networks:
       - backend
+    restart: always
 
 networks:
   backend:
